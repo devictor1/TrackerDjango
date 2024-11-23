@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Habit Tracker</title>
+</head>
+<body>
+    <h1>Habit Tracker</h1>
+    <a href="{% url 'task_create' %}">Criar novo hábito</a>
+    <ul>
+        {% for task in tasks %}
+        <li>
+            <strong>{{ task.title }}</strong> - {{ task.description }} - Às:
+            {% if task.horario %}
+                {{ task.horario|time:"H:i:s" }}  <!-- Usando o filtro time do Django -->
+            {% else %}
+                N/A
+            {% endif %}
+            =
+            <p>Criado em: {{ task.created_at }}</p>
+            <a href="{% url 'task_update' task.pk %}">Editar</a>
+            <a href="{% url 'task_delete' task.pk %}">Deletar</a>
+            <p></p>
+        </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
